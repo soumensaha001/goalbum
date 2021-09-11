@@ -1,0 +1,48 @@
+basePath: /
+definitions:
+  main.album:
+    properties:
+      artist:
+        type: string
+      id:
+        type: string
+      price:
+        type: number
+      title:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  title: User API documentation
+  version: 1.0.0
+paths:
+  /:
+    post:
+      consumes:
+      - application/json
+      description: Create new album
+      parameters:
+      - description: Album Data
+        in: body
+        name: newAlbum
+        required: true
+        schema:
+          $ref: '#/definitions/main.album'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: object
+      summary: Create new album based on paramters
+      tags:
+      - Albums
+swagger: "2.0"

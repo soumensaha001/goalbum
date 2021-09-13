@@ -24,6 +24,30 @@ var doc = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/": {
+            "get": {
+                "description": "get all albums",
+                "tags": [
+                    "Albums"
+                ],
+                "summary": "Get all albums",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/main.album"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "Create new album",
                 "consumes": [
@@ -45,8 +69,8 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "schema": {
                             "type": "object"
                         }
@@ -59,6 +83,44 @@ var doc = `{
                     },
                     "500": {
                         "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/{id}": {
+            "get": {
+                "description": "get album by ID",
+                "tags": [
+                    "album"
+                ],
+                "summary": "Get one user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Album ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.album"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
                         "schema": {
                             "type": "object"
                         }
@@ -100,8 +162,8 @@ type swaggerInfo struct {
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
 	Version:     "1.0.0",
-	Host:        "localhost:8080",
-	BasePath:    "/",
+	Host:        "http://localhost:8080",
+	BasePath:    "/albums",
 	Schemes:     []string{},
 	Title:       "User API documentation",
 	Description: "",

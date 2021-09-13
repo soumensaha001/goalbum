@@ -1,4 +1,4 @@
-basePath: /
+basePath: /albums
 definitions:
   main.album:
     properties:
@@ -11,13 +11,29 @@ definitions:
       title:
         type: string
     type: object
-host: localhost:8080
+host: http://localhost:8080
 info:
   contact: {}
   title: User API documentation
   version: 1.0.0
 paths:
   /:
+    get:
+      description: get all albums
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.album'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Get all albums
+      tags:
+      - Albums
     post:
       consumes:
       - application/json
@@ -30,8 +46,8 @@ paths:
         schema:
           $ref: '#/definitions/main.album'
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Created
           schema:
             type: object
         "400":
@@ -45,4 +61,29 @@ paths:
       summary: Create new album based on paramters
       tags:
       - Albums
+  /{id}:
+    get:
+      description: get album by ID
+      parameters:
+      - description: Album ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.album'
+        "400":
+          description: Bad Request
+          schema:
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Get one user
+      tags:
+      - album
 swagger: "2.0"

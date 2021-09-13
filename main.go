@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	_ "./docs"
+	_ "docs"
 
 	"github.com/gin-gonic/gin"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -29,8 +29,8 @@ var albums = []album{
 
 // @title User API documentation
 // @version 1.0.0
-// @host localhost:8080
-// @BasePath /
+// @host http://localhost:8080
+// @BasePath /albums
 func main() {
 	router := gin.Default()
 	router.GET("/albums", getAlbums)
@@ -39,7 +39,7 @@ func main() {
 
 	//url := ginSwagger.URL("http://localhost:8080/swagger/swagger.json") // The url pointing to API definition
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	router.Run("localhost:8080")
+	router.Run(":8080")
 }
 
 // getAlbums responds with the list of all albums as JSON.
@@ -49,8 +49,7 @@ func main() {
 // @Tags Albums
 // @Success 200 {array} album
 // @Failure 404 {object} object
-// @Router /album [get]
-
+// @Router / [get]
 func getAlbums(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, albums)
 }
@@ -62,7 +61,7 @@ func getAlbums(c *gin.Context) {
 // @Tags Albums
 // @Accept json
 // @Param newAlbum body album true "Album Data"
-// @Success 200 {object} object
+// @Success 201 {object} object
 // @Failure 400,500 {object} object
 // @Router / [post]
 func postAlbums(c *gin.Context) {
@@ -81,6 +80,14 @@ func postAlbums(c *gin.Context) {
 
 // getAlbumByID locates the album whose ID value matches the id
 // parameter sent by the client, then returns that album as a response.
+// GetAlbumByID ... Get the user by id
+// @Summary Get one user
+// @Description get album by ID
+// @Tags album
+// @Param id path string true "Album ID"
+// @Success 200 {object} album
+// @Failure 400,404 {object} object
+// @Router /{id} [get]
 func getAlbumByID(c *gin.Context) {
 	id := c.Param("id")
 

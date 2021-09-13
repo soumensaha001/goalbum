@@ -1,0 +1,106 @@
+openapi: 3.0.1
+info:
+  title: User API documentation
+  contact: {}
+  version: 1.0.0
+servers:
+- url: //localhost:8080/albums
+paths:
+  /:
+    get:
+      tags:
+      - Albums
+      summary: Get all albums
+      description: get all albums
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/main.album'
+        404:
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: object
+    post:
+      tags:
+      - Albums
+      summary: Create new album based on paramters
+      description: Create new album
+      requestBody:
+        description: Album Data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/main.album'
+        required: true
+      responses:
+        201:
+          description: Created
+          content:
+            '*/*':
+              schema:
+                type: object
+        400:
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: object
+        500:
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: object
+      x-codegen-request-body-name: newAlbum
+  /{id}:
+    get:
+      tags:
+      - album
+      summary: Get one user
+      description: get album by ID
+      parameters:
+      - name: id
+        in: path
+        description: Album ID
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/main.album'
+        400:
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: object
+        404:
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: object
+components:
+  schemas:
+    main.album:
+      type: object
+      properties:
+        artist:
+          type: string
+        id:
+          type: string
+        price:
+          type: number
+        title:
+          type: string

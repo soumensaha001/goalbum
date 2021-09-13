@@ -29,7 +29,7 @@ var albums = []album{
 
 // @title User API documentation
 // @version 1.0.0
-// @host http://localhost:8080
+// @host localhost:8080
 // @BasePath /albums
 func main() {
 	router := gin.Default()

@@ -33,9 +33,9 @@ var albums = []album{
 // @BasePath /albums
 func main() {
 	router := gin.Default()
-	router.GET("/albums", getAlbums)
-	router.POST("/albums", postAlbums)
-	router.GET("/albums/:id", getAlbumByID)
+	router.GET("/albums/get", getAlbums)
+	router.POST("/albums/post", postAlbums)
+	router.GET("/albums/get/:id", getAlbumByID)
 
 	//url := ginSwagger.URL("http://localhost:8080/swagger/swagger.json") // The url pointing to API definition
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
@@ -49,7 +49,7 @@ func main() {
 // @Tags Albums
 // @Success 200 {array} album
 // @Failure 404 {object} object
-// @Router / [get]
+// @Router /get/ [get]
 func getAlbums(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, albums)
 }
@@ -63,7 +63,7 @@ func getAlbums(c *gin.Context) {
 // @Param newAlbum body album true "Album Data"
 // @Success 201 {object} object
 // @Failure 400,500 {object} object
-// @Router / [post]
+// @Router /post/ [post]
 func postAlbums(c *gin.Context) {
 	var newAlbum album
 
@@ -87,7 +87,7 @@ func postAlbums(c *gin.Context) {
 // @Param id path string true "Album ID"
 // @Success 200 {object} album
 // @Failure 400,404 {object} object
-// @Router /{id} [get]
+// @Router /get/{id} [get]
 func getAlbumByID(c *gin.Context) {
 	id := c.Param("id")
 

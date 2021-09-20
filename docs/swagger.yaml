@@ -17,7 +17,7 @@ info:
   title: User API documentation
   version: 1.0.0
 paths:
-  /:
+  /get/:
     get:
       description: get all albums
       responses:
@@ -34,6 +34,32 @@ paths:
       summary: Get all albums
       tags:
       - Albums
+  /get/{id}:
+    get:
+      description: get album by ID
+      parameters:
+      - description: Album ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.album'
+        "400":
+          description: Bad Request
+          schema:
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Get one user
+      tags:
+      - album
+  /post/:
     post:
       consumes:
       - application/json
@@ -61,29 +87,4 @@ paths:
       summary: Create new album based on paramters
       tags:
       - Albums
-  /{id}:
-    get:
-      description: get album by ID
-      parameters:
-      - description: Album ID
-        in: path
-        name: id
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/main.album'
-        "400":
-          description: Bad Request
-          schema:
-            type: object
-        "404":
-          description: Not Found
-          schema:
-            type: object
-      summary: Get one user
-      tags:
-      - album
 swagger: "2.0"
